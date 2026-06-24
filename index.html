@@ -1,37 +1,727 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Font Poppins -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;1,400&display=swap" rel="stylesheet">
-  <!-- Style CSS -->
-  <link rel="stylesheet" href="style.css">
-  <title>Halaman Login</title>
-  <link rel="icon" href="favicon.png" type="image/x-icon">
+  <title>💌 Happy Birthday Adekk</title>
+  <meta name="description" content="Selamat Ulang Tahun Adekk 🎂">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
 </head>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
+  :root {
+    --rose:    #c9667a;
+    --blush:   #f2d0d8;
+    --cream:   #fff8f9;
+    --mauve:   #8c4a5a;
+    --lilac:   #d9b8c4;
+    --text:    #4a2535;
+    --white:   #ffffff;
+    --shadow:  rgba(180, 80, 110, 0.18);
+  }
+
+  html, body {
+    min-height: 100vh;
+    font-family: 'Lato', sans-serif;
+    background: #1a0a10;
+    color: var(--text);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ── Background ─────────────────────────── */
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(201,102,122,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 70%, rgba(140,74,90,0.28) 0%, transparent 60%),
+      linear-gradient(160deg, #2b0e18 0%, #1a0a10 50%, #21091a 100%);
+  }
+
+  /* ── Floating petals canvas ──────────────── */
+  #petal-canvas { position:fixed; inset:0; z-index:1; pointer-events:none; }
+
+  /* ── Floating hearts ─────────────────────── */
+  .hati {
+    position: fixed;
+    opacity: 0.6;
+    animation: hatiFloat 5s ease-in-out forwards;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .hati svg { width: 22px; height: 22px; fill: var(--rose); filter: drop-shadow(0 0 6px #e8708880); }
+  @keyframes hatiFloat {
+    0%   { transform: translateY(10vh) scale(0.8); opacity: 0; }
+    20%  { opacity: 0.7; }
+    80%  { opacity: 0.6; }
+    100% { transform: translateY(-100vh) scale(1.1); opacity: 0; }
+  }
+
+  /* ── Circle ambient ──────────────────────── */
+  .circ-wrap { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+  .circ-wrap div {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,102,122,0.12);
+    animation: circFloat 14s linear infinite;
+  }
+  .circ-wrap div:nth-child(1)  { width:90px;  height:90px;  top:8%;  left:35%;  animation-duration:11s; }
+  .circ-wrap div:nth-child(2)  { width:60px;  height:60px;  top:70%; left:55%;  animation-duration:9s;  }
+  .circ-wrap div:nth-child(3)  { width:110px; height:110px; top:18%; left:7%;   animation-duration:13s; }
+  .circ-wrap div:nth-child(4)  { width:70px;  height:70px;  top:28%; left:72%;  animation-duration:15s; }
+  .circ-wrap div:nth-child(5)  { width:50px;  height:50px;  top:60%; left:10%;  animation-duration:8s;  }
+  .circ-wrap div:nth-child(6)  { width:80px;  height:80px;  top:85%; left:78%;  animation-duration:12s; }
+  @keyframes circFloat {
+    0%   { transform: scale(0) rotate(0deg); opacity: 0.6; }
+    100% { transform: scale(1.5) rotate(360deg) translateY(-80px); opacity: 0; }
+  }
+
+  /* ── Util ────────────────────────────────── */
+  .hidden { display: none !important; }
+
+  /* ══════════════════════════════════════════
+     HAL 1 — ENVELOPE
+  ══════════════════════════════════════════ */
+  #hal1 {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding-bottom: 40px;
+  }
+
+  .env-wrapper { position: relative; margin-top: 20px; }
+
+  #envelope {
+    position: relative;
+    width: 220px; height: 154px;
+    border-radius: 4px 4px 14px 14px;
+    background: linear-gradient(160deg, #f2d0d8, #e8b4c0);
+    box-shadow: 0 12px 40px rgba(180,80,110,0.35), 0 2px 8px rgba(0,0,0,0.3);
+    animation: envFloat 4s ease-in-out infinite;
+    cursor: pointer;
+  }
+  @keyframes envFloat {
+    0%,100% { transform: translateY(0) rotate(-1deg); }
+    50%      { transform: translateY(-14px) rotate(1deg); }
+  }
+
+  /* flap */
+  .env-flap {
+    position: absolute; top: 0; left: 0;
+    width: 0; height: 0;
+    border-left:  110px solid transparent;
+    border-right: 110px solid transparent;
+    border-top:   80px solid #c9667a;
+    transform-origin: top center;
+    transition: transform 0.65s cubic-bezier(0.68,-0.55,0.27,1.55);
+    z-index: 5;
+  }
+  .env-pocket {
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 0;
+    border-left:  110px solid #e8b4c0;
+    border-right: 110px solid #e8b4c0;
+    border-bottom: 80px solid #dda3b0;
+    border-radius: 0 0 14px 14px;
+    z-index: 2;
+  }
+  #envelope.open .env-flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+  }
+
+  /* letter inside */
+  .env-letter {
+    position: absolute;
+    bottom: 8px; left: 10%; width: 80%;
+    height: 85%; border-radius: 8px;
+    background: var(--cream);
+    box-shadow: 0 4px 18px rgba(180,80,110,0.25);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 3;
+    transition: transform 0.55s 0.25s cubic-bezier(0.68,-0.55,0.27,1.55);
+  }
+  .env-letter-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1rem;
+    color: var(--rose);
+    text-align: center;
+    line-height: 1.5;
+  }
+  #envelope.open .env-letter {
+    transform: translateY(-68px) scale(1.04);
+    box-shadow: 0 18px 45px rgba(180,80,110,0.4);
+  }
+
+  /* heart on envelope */
+  .env-heart-icon {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 1.8rem; z-index: 6;
+    animation: heartPulse 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes heartPulse {
+    0%,100% { transform: translate(-50%,-50%) scale(1); }
+    50%      { transform: translate(-50%,-50%) scale(1.2); }
+  }
+
+  /* sparkles on envelope */
+  .env-sparks { position:absolute; top:60px; left:0; right:0; height:0; z-index:4; }
+  .env-spark {
+    position:absolute; width:5px; height:5px;
+    background: var(--blush); border-radius:50%;
+    box-shadow: 0 0 8px var(--rose);
+    animation: sparkUp 4.5s linear infinite;
+  }
+  .env-spark:nth-child(1) { left:20%; animation-delay:0s; }
+  .env-spark:nth-child(2) { left:55%; animation-delay:1.2s; }
+  .env-spark:nth-child(3) { left:80%; animation-delay:2.4s; }
+  @keyframes sparkUp {
+    0%   { transform:translateY(0) scale(1); opacity:1; }
+    100% { transform:translateY(-180px) scale(0.4); opacity:0; }
+  }
+  #envelope.open .env-spark { opacity:0; animation:none; }
+
+  /* open button */
+  .btn-open {
+    margin-top: 28px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--rose), var(--mauve));
+    border: none; border-radius: 40px;
+    padding: 10px 34px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    letter-spacing: 0.5px;
+  }
+  .btn-open:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 14px 32px var(--shadow); }
+
+  /* greeting animation */
+  #finalGreeting {
+    position: fixed; top: 42%; left: 50%;
+    transform: translate(-50%,-42%) scale(0);
+    opacity: 0;
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.2rem; font-weight: 700;
+    color: var(--white);
+    text-shadow: 0 0 30px #e87090, 0 0 60px #c9667a;
+    text-align: center; z-index: 100;
+    pointer-events: none; white-space: nowrap;
+  }
+  #finalGreeting.show { animation: greetAppear 1.5s ease forwards; }
+  #finalGreeting.hide { animation: greetDisappear 1.2s ease forwards; }
+  @keyframes greetAppear {
+    0%   { transform:translate(-50%,-42%) scale(0); opacity:0; }
+    55%  { transform:translate(-50%,-42%) scale(1.25); opacity:1; }
+    100% { transform:translate(-50%,-42%) scale(1); opacity:1; }
+  }
+  @keyframes greetDisappear {
+    0%   { transform:translate(-50%,-42%) scale(1); opacity:1; }
+    100% { transform:translate(-50%,-42%) scale(0); opacity:0; }
+  }
+  #finalGreeting span {
+    display:inline-block; opacity:0;
+    transform:translateY(40px);
+    animation: letterPop 1.4s ease forwards;
+  }
+  @keyframes letterPop { to { opacity:1; transform:translateY(0); } }
+
+  /* ══════════════════════════════════════════
+     HAL 2 — MEMORY GAME
+  ══════════════════════════════════════════ */
+  #hal2 {
+    position: relative; z-index: 10;
+    display: none;
+    flex-direction: column; align-items: center;
+    padding: 28px 20px 32px;
+    margin: 80px auto 40px;
+    width: min(420px, 92vw);
+    background: rgba(255,248,249,0.07);
+    backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(201,102,122,0.3);
+    border-radius: 24px 6px 24px 6px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+  }
+  #hal2 h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7rem; color: var(--blush);
+    margin-bottom: 6px; letter-spacing: 0.5px;
+  }
+  #hal2 > p {
+    font-size: 0.82rem; color: var(--lilac);
+    margin-bottom: 18px; text-align: center;
+  }
+  .papanGame {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    justify-items: center;
+    width: 100%;
+    max-width: 320px;
+  }
+  .kartu { width: 58px; height: 58px; cursor: pointer; }
+  .dalemKartu {
+    position:relative; width:100%; height:100%;
+    transition:transform 0.55s; transform-style:preserve-3d;
+  }
+  .kartu.balik .dalemKartu { transform: rotateY(180deg); }
+  .depanKartu, .belakangKartu {
+    position:absolute; inset:0;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    display:flex; align-items:center; justify-content:center;
+    border: 1.5px solid rgba(255,255,255,0.25);
+  }
+  .depanKartu {
+    background: linear-gradient(135deg, rgba(201,102,122,0.35), rgba(140,74,90,0.35));
+  }
+  .depanKartu::after {
+    content: '♡';
+    font-size: 1.4rem;
+    color: rgba(255,255,255,0.3);
+  }
+  .belakangKartu {
+    background: linear-gradient(135deg, #fff0f3, #fddde6);
+    transform: rotateY(180deg);
+    font-size: 1.6rem;
+  }
+  #statusGame {
+    font-size: 0.8rem; color: var(--lilac);
+    margin-top: 14px; min-height: 22px;
+    text-align: center;
+  }
+  .btn-game {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--rose), var(--mauve));
+    border: none; border-radius: 30px;
+    padding: 8px 28px; margin-top: 14px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px var(--shadow);
+    transition: transform 0.3s;
+  }
+  .btn-game:hover { transform: translateY(-3px); }
+  .btn-cadangan {
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(201,102,122,0.4);
+    color: var(--lilac);
+  }
+
+  /* ══════════════════════════════════════════
+     HAL 3 — SURAT
+  ══════════════════════════════════════════ */
+  #hal3 {
+    position: relative; z-index: 10;
+    display: none;
+    flex-direction: column; align-items: center;
+    padding: 28px 22px 30px;
+    margin: 80px auto 50px;
+    width: min(440px, 92vw);
+    background: rgba(255,248,249,0.07);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(201,102,122,0.28);
+    border-radius: 6px 24px 6px 24px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+  }
+
+  .stiker {
+    display: flex; justify-content: center;
+    margin-bottom: 18px;
+    transform: scale(0); transition: transform 0.6s ease;
+  }
+  .stiker img {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.85);
+    background: rgba(255,240,245,0.8);
+    padding: 8px;
+    box-shadow: 0 6px 24px rgba(201,102,122,0.4);
+  }
+
+  #containerPesan {
+    width: 100%;
+    max-height: 52vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 2px;
+  }
+  #containerPesan::-webkit-scrollbar { display: none; }
+
+  .pesan-tanggal {
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.95rem;
+    color: var(--lilac);
+    margin-bottom: 10px;
+    display: block;
+  }
+  #teksCinta, #pesanAkhir, #teksLucu {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.84rem;
+    line-height: 1.75;
+    color: rgba(255,240,245,0.88);
+    text-align: left;
+    margin-bottom: 14px;
+  }
+  #teksLucu {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1rem;
+    color: var(--blush);
+    border-left: 2px solid var(--rose);
+    padding-left: 12px;
+    margin-top: 6px;
+  }
+
+  /* corner deco */
+  #hal3::before, #hal3::after {
+    content: '✦';
+    position: absolute;
+    font-size: 0.7rem;
+    color: rgba(201,102,122,0.4);
+  }
+  #hal3::before { top: 10px; left: 14px; }
+  #hal3::after  { bottom: 10px; right: 14px; }
+
+  /* ── Responsive ──────────────────────────── */
+  @media (max-width: 600px) {
+    #envelope { width: 170px; height: 119px; }
+    .env-flap  { border-left-width:85px; border-right-width:85px; border-top-width:62px; }
+    .env-pocket{ border-left-width:85px; border-right-width:85px; border-bottom-width:62px; }
+    .kartu { width: 46px; height: 46px; }
+    .belakangKartu { font-size: 1.3rem; }
+    #finalGreeting { font-size: 2rem; white-space: normal; text-align: center; }
+  }
+</style>
 <body>
-  <div class="login_container">
-    <h2>Hi👋🏼 Nayaah login dulu yuk</h2>
-    <form id="loginForm" class="login_form">
-      <input type="text" id="username" placeholder="Username" />
-      <input type="password" id="password" placeholder="Password" />
-      <button type="submit" id="loginBtn">Login</button>
-    </form>
-    <p class="login_description">
-      pssstttt, usernamenya isi "user" dan passwordnya sama dengan usernamenya ya
-    </p>
-  </div>
-</body>
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-<!-- SweetAlery -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- Main JS -->
-<script type="application/javascript" src="index.js"></script>
 
+<!-- Audio -->
+<audio id="linkmp3" src="https://feeldreams.github.io/audio/thousand.mp3"></audio>
+
+<!-- Layers -->
+<div class="bg-layer"></div>
+<canvas id="petal-canvas"></canvas>
+<div class="circ-wrap">
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+</div>
+
+<!-- Final Greeting Overlay -->
+<div id="finalGreeting">Happy Birthday Adekk</div>
+
+<!-- ════════════════════════════════════════
+     HAL 1: ENVELOPE
+════════════════════════════════════════ -->
+<div id="hal1">
+  <div class="env-wrapper">
+    <div id="envelope" class="close">
+      <div class="env-flap"></div>
+      <div class="env-pocket"></div>
+      <div class="env-heart-icon">💌</div>
+      <div class="env-letter">
+        <div class="env-letter-text">Teruntuk<br>Adekk 🩷</div>
+      </div>
+      <div class="env-sparks">
+        <div class="env-spark"></div>
+        <div class="env-spark"></div>
+        <div class="env-spark"></div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-open" id="btnBuka" onclick="bukaEnvelope()">Buka ✉️</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     HAL 2: MEMORY GAME
+════════════════════════════════════════ -->
+<div id="hal2">
+  <h2>💭 Memory Game</h2>
+  <p>Cocokkan semua pasangan emoji² ini dulu ya! 😆</p>
+  <div id="papanGame" class="papanGame"></div>
+  <p id="statusGame"></p>
+  <button id="lanjut" class="btn-game hidden" onclick="pindahHal(3)">Lihat Surat 💌</button>
+  <button id="ulang" class="btn-game btn-cadangan hidden" onclick="mulaiHal2()">Coba Lagi!</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     HAL 3: SURAT
+════════════════════════════════════════ -->
+<div id="hal3">
+  <div id="stiker3" class="stiker">
+    <img id="stiker3a" src="https://htmlku.com/0/panda/cinta.gif" alt="stiker"/>
+    <img id="stiker3b" class="hidden" src="https://htmlku.com/0/panda/ciumpipi.gif" alt="stiker2"/>
+  </div>
+  <div id="containerPesan">
+    <p id="teksCinta"></p>
+    <p id="pesanAkhir"></p>
+    <p id="teksLucu"></p>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+//  KONTEN SURAT
+// ─────────────────────────────────────────
+const txtDoa = `Jumat, 26 Juni 2026 💌<br><br><b style="font-size:15px;font-family:'Dancing Script',cursive">Happy Birthday Adekkk 🎂🩷</b><br><br>Maaf ya ngasi kata sambutannya sekarang wkwk — soalnya kalo nunggu pas tanggalnya abg takut adek ga liat, jadi abg kirim sekarang aja biar pas diliat tanggal 26 ya, mudah-mudahannya sih diliat 🫣<br>kan chat abg ga dibls sama adek,kata dimas jangan egois kalo ga dibls yaudah<br>Adekk ultahhh yaaa??  Bener ga sih tanggal segini? Abg lupa soalnya wkwkwk, sory laa  yaaa kalo salah — tapi seinget abg tanggal ini.<br><br>Udah masuk 20 ya adekk 🥹 Mudah-mudahan semakin dewasa lagi, semakin baik, semakin bahagia.`;
+
+const txtPesanAkhir = `Maaf ya belum bisa ngasi apa-apa, soalnya adek curang ga ngasih tau alamat wkwk. Padahal abg mau ngasih kado beneran. Mungkin hadiahnya bundle DC aja ya — soalnya abg liat di server adek, di DC adek, jelek banget akun DC adek 😭 Yaudah abg giftkan ini aja, soalnya abg yakin kalo dikasih kado adek ga mau. Kalo ini kan adek ga bisa nolak. <b>DIPAKEE YAAA</b>, kecewa bgt kalo ga dipake.<br><br>Kita udah asing ya? wkwkwk... iya gpp. Sejak kejadian itu, setelah respon adek berubah, abg milih diam. Sebenernya dari awal adek bohong, abg udah tau arahnya kemana — tapi abg pengen sedikit lebih lama aja sampe waktunya tiba. Mungkin sekarang waktunya abg ungkapin aja.<br><br>Makasih ya adekk. Adek udah bikin hidup abg berwarna. Dan makasih juga buat kecewanya.<br><br>Adek tau ga? Waktu adek main sama mereka, ada abg di sini yang nunggu ajakan call dari adek. Waktu itu adek bilang <i>"Nantik malam kita telepon laa yaa"</i> — abg nunggu sampe sekarang. Tapi nada dering dari adek ga pernah datang.<br><br>Jujur abg seneng banget adek udah ada temennya lagi, kawan adek udah balik. Tapi caranya adek salah menurut abg. Gpp kok kalo emang niat adek dari awal gitu — abg terima.<br><br>Adek ninggalin abg gitu aja. Kalo kita emang udah selesai, ngomong aja ya adekk — jangan ninggalin janji mau call, sedih tau adekk 🥺<br><br>Saat adek ga bales chat abg yang terakhir, abg udah tau jawabannya — bukan dari adek, tapi dari situasi. Cukup, ohh gitu. Kalaupun semua itu palsu, abg tetep berterima kasih ke adek yang udah bikin hidup abg sedikit berwarna. Dengan canda tawa, bikin adek nangis wkwkwk — seneng abg 😄<br><br>Abg yang milih menunggu call adek, jadi apapun resikonya abg tetep nerima dengan senang hati. Kalaupun lama, gpp. Abg hebat dalam menunggu.<br><br>Setiap ada orang yang deket, pasti abg mikir nanti juga pasti gini lagi. Ujungnya akan sama. Tinggal nunggu waktu aja.<br><br>Kejadian itu membunuh seluruh kepercayaanku.<br><br>Semenjak adek berubah, abg beneran ga percaya lagi sama orang lain di game Roblox. Adek orang pertama yang abg bawa sejauh ini. Tapi I don't know why it's like this.<br><br>Maaf ya kalo abg sering join adek tanpa adek tau — sering bolak-balik liat akun adek, mastiin adek online apa nggak, main sama siapa. Sialnya abg selalu datang sendiri di map pertama kita ketemu 😔<br><br>Kalo abg ganggu, bilang ya adekk :) — biar abg ga ganggu lagi, ga chat adek lagi. Maaf udah ngotorin hidup adek dengan jumpa orang kyk abg.<br><br>Seasing apapun kita, abg ga pernah benci adek. Karena abg selalu inget serunya kita telponan, typing adekk, ocehan adekk — dan karena adek, abg sampe sekarang ga ngerokok lagi.<br><br>Jangan pernah ngerasa sendiri ya adekk. Kan udah banyak temen adek sekarang — jangan liat ke abg.<br><br>Abg ga pergi. Abg pernah bilang ke adek <i>"I'll stay here"</i> — kalo adek ngerasa abg ganggu dan mau abg pergi, ngomong aja ya adekk. Tapi tunggu abg ikhlas dulu ya 🙏 Abg ga ngeblok, ga unfriend juga.<br><br><i>If you need me, I'm here. If you don't, I'll stay.<br>As long as I don't see you with anyone else.</i><br><br>Abg berhasil nepatin janji-janji abg: ga ngerokok lagi, nnti abg bikin video. Untuk janji IPK paling tinggi itu gausah ya adekk — adek udah menang 😅 Dan adek juga udah pernah ngirim makanan waktu itu, itu udah lebih dari cukup buat abg.<br><br>Kalo suatu saat temen-temen adek udah bubar dan adek mau kembali lagi ke abg hanya untuk nangis sepuasnya — gpp. Abg mau denger semua cerita adek. <b>You deserve better.</b><br><br><b style="font-size:15px;font-family:'Dancing Script',cursive">HAPPY BIRTHDAY YA ADEKKK 🎉🎂</b><br>Udah masuk usia dewasa ya adekk sekarang wkwkwk.<br>Gausah buru-buru, nanti salah orang lagi 😜`;
+
+const txtLucu = `── ᯓᡣ𐭩<br>I will wait until whenever unless you say stop, don't bother me.<br>Forever and always. <b>I love uuu</b> 🫶❤️`;
+
+// ─────────────────────────────────────────
+//  MEMORY GAME CARDS
+// ─────────────────────────────────────────
+const kartu = [
+  { id:1, icon:'🩷' }, { id:2, icon:'💌' }, { id:3, icon:'🫶🏻' },
+  { id:4, icon:'💗' }, { id:5, icon:'😍' }, { id:6, icon:'💞' },
+  { id:1, icon:'🩷' }, { id:2, icon:'💌' }, { id:3, icon:'🫶🏻' },
+  { id:4, icon:'💗' }, { id:5, icon:'😍' }, { id:6, icon:'💞' }
+];
+
+// ─────────────────────────────────────────
+//  AUDIO
+// ─────────────────────────────────────────
+const audio = new Audio(document.getElementById('linkmp3').src);
+audio.loop = true;
+
+// ─────────────────────────────────────────
+//  PETAL CANVAS
+// ─────────────────────────────────────────
+(function initPetals() {
+  const canvas = document.getElementById('petal-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const petals = Array.from({ length: 25 }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    r: Math.random() * 4 + 1.5,
+    speed: Math.random() * 1.2 + 0.4,
+    drift: (Math.random() - 0.5) * 1.5,
+    opacity: Math.random() * 0.4 + 0.2
+  }));
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    petals.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,102,122,${p.opacity})`;
+      ctx.fill();
+      p.y += p.speed;
+      p.x += p.drift + Math.sin(p.y / 60) * 0.8;
+      if (p.y > canvas.height + 10) {
+        p.y = -10; p.x = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ─────────────────────────────────────────
+//  FLOATING HEARTS
+// ─────────────────────────────────────────
+let heartInterval;
+function spawnHeart() {
+  const el = document.createElement('div');
+  el.className = 'hati';
+  el.style.left = Math.random() * 100 + 'vw';
+  el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+             2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+             C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+             c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>`;
+  el.addEventListener('animationend', () => el.remove());
+  document.body.appendChild(el);
+}
+
+// ─────────────────────────────────────────
+//  BUKA ENVELOPE
+// ─────────────────────────────────────────
+function bukaEnvelope() {
+  audio.play().catch(() => {});
+  const env = document.getElementById('envelope');
+  const btnBuka = document.getElementById('btnBuka');
+
+  env.classList.add('open');
+  btnBuka.style.cssText = 'transform:scale(0);opacity:0;transition:all .5s ease;pointer-events:none';
+
+  setTimeout(() => {
+    env.style.cssText = 'transform:scale(0);opacity:0;transition:all .5s ease';
+
+    setTimeout(() => {
+      // Show greeting
+      const greet = document.getElementById('finalGreeting');
+      greet.classList.add('show');
+
+      const rawText = greet.textContent.trim();
+      greet.innerHTML = '';
+      rawText.split('').forEach((ch, i) => {
+        const sp = document.createElement('span');
+        sp.textContent = ch === ' ' ? '\u00A0' : ch;
+        sp.style.animationDelay = `${i * 0.045}s`;
+        greet.appendChild(sp);
+      });
+
+      setTimeout(() => {
+        greet.classList.remove('show');
+        greet.classList.add('hide');
+        setTimeout(() => { pindahHal(3); }, 1100);
+      }, 2600);
+
+    }, 250);
+  }, 1600);
+}
+
+// ─────────────────────────────────────────
+//  MEMORY GAME
+// ─────────────────────────────────────────
+let kartuDibuka = [];
+let pasanganCocok = 0;
+let gameJalan = false;
+
+function acakArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function mulaiHal2() {
+  kartuDibuka = []; pasanganCocok = 0; gameJalan = true;
+  document.getElementById('statusGame').innerText = '';
+  document.getElementById('lanjut').classList.add('hidden');
+  document.getElementById('ulang').classList.add('hidden');
+
+  const papan = document.getElementById('papanGame');
+  papan.innerHTML = '';
+  acakArray(kartu).forEach((card) => {
+    const el = document.createElement('div');
+    el.className = 'kartu';
+    el.dataset.id = card.id;
+    el.innerHTML = `
+      <div class="dalemKartu">
+        <div class="depanKartu"></div>
+        <div class="belakangKartu">${card.icon}</div>
+      </div>`;
+    el.addEventListener('click', () => balikKartu(el, card));
+    papan.appendChild(el);
+  });
+}
+
+function balikKartu(el, card) {
+  if (!gameJalan || kartuDibuka.length >= 2 || el.classList.contains('balik')) return;
+  el.classList.add('balik');
+  kartuDibuka.push({ el, card });
+
+  if (kartuDibuka.length === 2) {
+    const [a, b] = kartuDibuka;
+    if (a.card.id === b.card.id) {
+      pasanganCocok++;
+      kartuDibuka = [];
+      if (pasanganCocok === 6) setTimeout(() => pindahHal(3), 800);
+    } else {
+      setTimeout(() => {
+        a.el.classList.remove('balik');
+        b.el.classList.remove('balik');
+        kartuDibuka = [];
+      }, 700);
+    }
+  }
+}
+
+// ─────────────────────────────────────────
+//  HAL 3 — TYPING PESAN
+// ─────────────────────────────────────────
+function mulaiHal3() {
+  const stiker3  = document.getElementById('stiker3');
+  const stiker3a = document.getElementById('stiker3a');
+  const stiker3b = document.getElementById('stiker3b');
+  stiker3.style.transform = 'scale(1)';
+
+  const scrollC = document.getElementById('containerPesan');
+  const scrollInt = setInterval(() => { scrollC.scrollTop += 8; }, 60);
+
+  new TypeIt('#teksCinta', {
+    strings: txtDoa,
+    speed: 20,
+    startDelay: 300,
+    afterComplete() {
+      document.querySelector('#teksCinta .ti-cursor').style.display = 'none';
+      new TypeIt('#pesanAkhir', {
+        strings: txtPesanAkhir,
+        speed: 18,
+        waitUntilVisible: true,
+        afterComplete() {
+          document.querySelector('#pesanAkhir .ti-cursor').style.display = 'none';
+          new TypeIt('#teksLucu', {
+            strings: txtLucu,
+            speed: 22,
+            waitUntilVisible: true,
+            afterComplete() {
+              document.querySelector('#teksLucu .ti-cursor').style.display = 'none';
+              clearInterval(scrollInt);
+              heartInterval = setInterval(spawnHeart, 220);
+              stiker3.style.transform = 'scale(0)';
+              setTimeout(() => {
+                stiker3a.src = stiker3b.src;
+                stiker3.style.transform = 'scale(1)';
+              }, 350);
+            }
+          }).go();
+        }
+      }).go();
+    }
+  }).go();
+}
+
+// ─────────────────────────────────────────
+//  NAVIGASI HALAMAN
+// ─────────────────────────────────────────
+function pindahHal(hal) {
+  // Sembunyiin semua dulu
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById(`hal${i}`);
+    el.style.display = 'none';
+  }
+
+  const target = document.getElementById(`hal${hal}`);
+
+  if (hal === 2) {
+    target.style.cssText = 'display:flex;transform:scale(0);opacity:0;transition:all .7s ease';
+    setTimeout(() => {
+      target.style.cssText = 'display:flex;transform:scale(1);opacity:1;transition:all .7s ease';
+      mulaiHal2();
+    }, 80);
+    return;
+  }
+
+  // hal 3
+  target.style.cssText = 'display:flex;transform:scale(0);opacity:0;transition:all .7s ease';
+  setTimeout(() => {
+    target.style.cssText = 'display:flex;transform:scale(1);opacity:1;transition:all .7s ease';
+    setTimeout(() => mulaiHal3(), 150);
+  }, 80);
+}
+
+// Start
+document.getElementById('hal1').style.display = 'flex';
+document.getElementById('hal1').style.flexDirection = 'column';
+document.getElementById('hal1').style.alignItems = 'center';
+document.getElementById('hal1').style.justifyContent = 'center';
+</script>
+</body>
 </html>
